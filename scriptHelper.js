@@ -14,21 +14,29 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
                 </ol>
                 <img src="">
    */
+
 }
 
 function validateInput(testInput) {
-   
+   if (testInput.value === "") {
+    return "Empty"
+   }
+   else if (isNaN(testInput.value)) {
+    return "Not a Number"
+   }
+   else {
+    return "Is a Number"
+   }
 }
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-   
 }
 
 async function myFetch() {
     let planetsReturned;
 
     planetsReturned = await fetch().then( function(response) {
-        });
+    });
 
     return planetsReturned;
 }
