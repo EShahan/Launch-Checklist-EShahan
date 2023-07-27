@@ -55,9 +55,9 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         }
     }
 
-    // Check that fuelLevel and cargoLevel are numbers
-    if (validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number") {
-        alert("fuelLevel and cargoMass must both be numbers!");
+    // Check if any value is inappropriate
+    if (validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number" || validateInput(pilot) === "Is a Number" || validateInput(copilot) === "Is a Number") {
+        alert("Make sure to enter valid information for each field!");
         return; // User must click submit again
     }
 
@@ -74,6 +74,9 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         launchStatus.style.color = "red";
         fuelStatus.innerHTML = `Fuel level too low for launch`;
     }
+    else { // Fixes scenario where bad fuel amount is inserted initially, then good amount for fuel but still bad for cargo will still read a poor status for fuel
+        fuelStatus.innerHTML = `Fuel level high enough for launch`
+    }
 
     //If cargo is too large (> 10,000kg) faulty visible, shuttle not ready + specific red shade, cargoStatus too high
     if (cargoLevel.value > 10000) {
@@ -81,6 +84,9 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         launchStatus.innerHTML = `Shuttle not ready for launch`;
         launchStatus.style.color = "#C7254E";
         cargoStatus.innerHTML = `Cargo Mass too high for launch`;
+    }
+    else { // Fixes scenario where bad cargo amount is inserted initially, then good amount for cargo but still bad for fuel will still read a poor status for cargo
+        cargoStatus.innerHTML = `Cargo mass low enough for launch`;
     }
 
     // If no faulty equipment, successful launch, rehide faultyItems, change color to green
