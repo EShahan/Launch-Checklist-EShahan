@@ -43,22 +43,30 @@ function validateInput(testInput) {
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     let launchStatus = document.getElementById("launchStatus");
-    let faultyItems = document.getElementById("faultyItems");
+    // let faultyItems = document.getElementById("faultyItems");
     let pilotStatus = document.getElementById("pilotStatus");
     let copilotStatus = document.getElementById("copilotStatus");
     let fuelStatus = document.getElementById("fuelStatus");
     let cargoStatus = document.getElementById("cargoStatus");
-    for (let i=0; i<list.length; i++) {
-        if(validateInput(list[i]) === "Empty") {
-            alert("all fields are required!"); // Checks if any field is empty.
-            return; // Prevents status' from updating
+
+    inputList = [pilot, copilot, fuelLevel, cargoLevel];
+    // console.log(validateInput(pilot));
+    // console.log(validateInput(copilot));
+    // console.log(validateInput(fuelLevel));
+    // console.log(validateInput(cargoLevel));
+
+    // Checks if any field is empty.
+    for (let i=0; i<inputList.length; i++) {
+        if(validateInput(inputList[i]) === "Empty") {
+            // alert("all fields are required!"); // Checks if any field is empty.
+            // return; // Prevents status' from updating
         }
     }
 
     // Check if any value is inappropriate
     if (validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number" || validateInput(pilot) === "Is a Number" || validateInput(copilot) === "Is a Number") {
-        alert("Make sure to enter valid information for each field!");
-        return; // Prevents status' from updating
+        // alert("Make sure to enter valid information for each field!");
+        // return; // Prevents status' from updating
     }
 
     // Above are basic checks for that the information is readable. Below are checks for faulty equipment.
@@ -69,7 +77,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
     //If fuel level is too low (< 10,000L) faulty visible, shuttle not ready + red shade, cargoStatus too high
     if (fuelLevel.value < 10000) {
-        faultyItems.style.visibility = "visible";
+        list.style.visibility = "visible";
         launchStatus.innerHTML = `Shuttle not ready for launch`;
         launchStatus.style.color = "red";
         fuelStatus.innerHTML = `Fuel level too low for launch`;
@@ -80,7 +88,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
     //If cargo is too large (> 10,000kg) faulty visible, shuttle not ready + specific red shade, cargoStatus too high
     if (cargoLevel.value > 10000) {
-        faultyItems.style.visibility = "visible";
+        list.style.visibility = "visible";
         launchStatus.innerHTML = `Shuttle not ready for launch`;
         launchStatus.style.color = "#C7254E";
         cargoStatus.innerHTML = `Cargo Mass too high for launch`;
@@ -91,15 +99,10 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
     // If no faulty equipment, successful launch, rehide faultyItems, change color to green
     if (fuelLevel.value >= 10000 && cargoLevel.value <= 10000) {
-        faultyItems.style.visibility = "hidden";
+        list.style.visibility = "hidden";
         launchStatus.innerHTML = `Shuttle is ready for launch`
         launchStatus.style.color = "#419F6A"
     }
-
-    // console.log(validateInput(pilot));
-    // console.log(validateInput(copilot));
-    // console.log(validateInput(fuelLevel));
-    // console.log(validateInput(cargoLevel));
 }
 
 async function myFetch() {
