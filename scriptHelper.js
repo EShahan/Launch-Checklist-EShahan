@@ -51,14 +51,14 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     for (let i=0; i<list.length; i++) {
         if(validateInput(list[i]) === "Empty") {
             alert("all fields are required!"); // Checks if any field is empty.
-            return; // User must click submit again
+            return; // Prevents status' from updating
         }
     }
 
     // Check if any value is inappropriate
     if (validateInput(fuelLevel) === "Not a Number" || validateInput(cargoLevel) === "Not a Number" || validateInput(pilot) === "Is a Number" || validateInput(copilot) === "Is a Number") {
         alert("Make sure to enter valid information for each field!");
-        return; // User must click submit again
+        return; // Prevents status' from updating
     }
 
     // Above are basic checks for that the information is readable. Below are checks for faulty equipment.
@@ -113,7 +113,7 @@ async function myFetch() {
 }
 
 function pickPlanet(planets) {
-    return planets[Math.floor(Math.random() * (6))];
+    return planets[Math.floor(Math.random() * 6)];
 }
 
 module.exports.addDestinationInfo = addDestinationInfo;
